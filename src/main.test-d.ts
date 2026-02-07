@@ -24,3 +24,8 @@ test('should not admit negative numbers', () => {
   // @ts-expect-error negative number
   assertType(new EnumSet([-1]));
 });
+
+test('should not admit number type', () => {
+  // @ts-expect-error number does not satisfy constraints
+  assertType(new EnumSet<number>());
+});
