@@ -1,4 +1,6 @@
-export class EnumSet<T extends number> {
+import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
+
+export class EnumSet<T extends IntegerLessThan32> {
   #bitfield: number = 0;
 
   constructor(iterable?: Iterable<T>) {

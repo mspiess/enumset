@@ -6,7 +6,7 @@ const Directions = {
   Up: 1,
   Right: 2,
   Down: 3,
-};
+} as const;
 
 test('should initialize empty', () => {
   const enumSet = new EnumSet();

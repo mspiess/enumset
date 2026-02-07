@@ -8,12 +8,17 @@ import vitest from '@vitest/eslint-plugin'
 
 export default defineConfig([
   {
-    files: ['**/*.tests.ts'], // or any other pattern
+    files: ['**/*.test.ts', '**/*.test-d.ts'],
     plugins: {
       vitest,
     },
     rules: {
       ...vitest.configs.recommended.rules,
+    },
+    settings: {
+      vitest: {
+        typecheck: true,
+      },
     },
   },
   stylistic.configs.customize({ semi: true }),
