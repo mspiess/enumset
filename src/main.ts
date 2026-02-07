@@ -39,4 +39,42 @@ export class EnumSet<T extends IntegerLessThan32> {
   delete(value: T) {
     this.#bitfield ^= (1 << value);
   }
+
+  /**
+   * Executes {@link callback} once for each value in this set, in the numeric order of the enum {@link T}.
+   *
+   * @template T
+   * @param {ForEachCallback<T, undefined>} callback A function to execute for each entry in the set.
+   */
+  forEach(callback: ForEachCallback<T, undefined>): void;
+  /**
+   * Executes {@link callback} once for each value in this set, in the numeric order of the enum {@link T}.
+   *
+   * @template T
+   * @template This
+   * @param {ForEachCallback<T, This>} callback A function to execute for each entry in the set.
+   * @param {This} thisArg A value to use as `this` when executing {@link callback}.
+   */
+  forEach<This>(callback: ForEachCallback<T, This>, thisArg: This): void;
+  forEach<This = undefined>(callback: (this: This | undefined, value: T, key: T, set: EnumSet<T>) => void, thisArg?: This) {
+    let n = this.#bitfield >>> 0;
+    while (n) {
+      const leastSignificantBitFlipped = n - 1;
+      const next = n & leastSignificantBitFlipped;
+      const value = Math.log2(n ^ next) as T;
+      callback.call(thisArg, value, value, this);
+      n = next;
+    }
+  }
 }
+
+/**
+ * @callback ForEachCallback
+ * @template T
+ * @template This
+ * @param {T} value Value of each iteration.
+ * @param {T} key Key of each iteration. This is always the same as {@link value}.
+ * @param {EnumSet<T>} The set being iterated.
+ * @this {This}
+ */
+type ForEachCallback<T extends IntegerLessThan32, This> = (this: This, value: T, key: T, set: EnumSet<T>) => void;
