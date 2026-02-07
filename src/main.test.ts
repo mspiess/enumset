@@ -62,3 +62,12 @@ test('should not have element after clearing', () => {
 
   expect(enumSet.has(Directions.Left)).toEqual(false);
 });
+
+test('should not have element after deletion', () => {
+  const enumSet = new EnumSet([Directions.Left, Directions.Right]);
+
+  enumSet.delete(Directions.Left);
+
+  expect(enumSet.has(Directions.Left)).toBe(false);
+  expect(enumSet.has(Directions.Right)).toBe(true);
+});
