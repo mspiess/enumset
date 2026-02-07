@@ -31,4 +31,8 @@ export class EnumSet<T extends IntegerLessThan32> {
     this.#bitfield |= (1 << value);
     return this;
   }
+
+  clear() {
+    this.#bitfield = 0;
+  }
 }

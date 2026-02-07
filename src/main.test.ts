@@ -54,3 +54,11 @@ test('should increase size after adding', () => {
 
   expect(enumSet.size).toEqual(1);
 });
+
+test('should not have element after clearing', () => {
+  const enumSet = new EnumSet([Directions.Left]);
+
+  enumSet.clear();
+
+  expect(enumSet.has(Directions.Left)).toEqual(false);
+});
