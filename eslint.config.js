@@ -22,7 +22,6 @@ export default defineConfig([
     },
   },
   stylistic.configs.customize({ semi: true }),
-  tseslint.configs.recommendedTypeChecked,
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     plugins: {js},
@@ -43,5 +42,6 @@ export default defineConfig([
       ],
     },
   },
+  tseslint.configs.recommendedTypeChecked,
   {files: ["**/*.md"], plugins: {markdown}, language: "markdown/gfm", extends: ["markdown/recommended"]},
 ]);
