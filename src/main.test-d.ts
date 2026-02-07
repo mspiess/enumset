@@ -19,3 +19,8 @@ test('should not admit numbers outside the type parameter', () => {
   // @ts-expect-error number is not part of type parameter
   assertType(new EnumSet<3 | 4>([2]));
 });
+
+test('should not admit negative numbers', () => {
+  // @ts-expect-error negative number
+  assertType(new EnumSet([-1]));
+});
