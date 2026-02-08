@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { EnumSet } from './main.ts';
 
 const Directions = {
@@ -72,26 +72,28 @@ test('should not have element after deletion', () => {
   expect(enumSet.has(Directions.Right)).toBe(true);
 });
 
-test('should iterate through elements', () => {
-  const callbackFn = vi.fn();
-  const enumSet = new EnumSet([Directions.Right, Directions.Left]);
+describe('forEach', () => {
+  test('should iterate through elements', () => {
+    const callbackFn = vi.fn();
+    const enumSet = new EnumSet([Directions.Right, Directions.Left]);
 
-  enumSet.forEach(callbackFn);
+    enumSet.forEach(callbackFn);
 
-  expect(callbackFn).toHaveBeenCalledTimes(2);
-  expect(callbackFn).toHaveBeenNthCalledWith(1, Directions.Left, Directions.Left, enumSet);
-  expect(callbackFn).toHaveBeenLastCalledWith(Directions.Right, Directions.Right, enumSet);
-});
+    expect(callbackFn).toHaveBeenCalledTimes(2);
+    expect(callbackFn).toHaveBeenNthCalledWith(1, Directions.Left, Directions.Left, enumSet);
+    expect(callbackFn).toHaveBeenLastCalledWith(Directions.Right, Directions.Right, enumSet);
+  });
 
-test('should call callbackFn with thisArg', () => {
-  const enumSet = new EnumSet([Directions.Left]);
-  const thisArg = {};
-  let actual: unknown = null;
+  test('should call callbackFn with thisArg', () => {
+    const enumSet = new EnumSet([Directions.Left]);
+    const thisArg = {};
+    let actual: unknown = null;
 
-  enumSet.forEach(function () {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    actual = this;
-  }, thisArg);
+    enumSet.forEach(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      actual = this;
+    }, thisArg);
 
-  expect(actual).toBe(thisArg);
+    expect(actual).toBe(thisArg);
+  });
 });
