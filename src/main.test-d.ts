@@ -29,3 +29,7 @@ test('should not admit number type', () => {
   // @ts-expect-error number does not satisfy constraints
   assertType(new EnumSet<number>());
 });
+
+test('should be assignable to Set', () => {
+  expectTypeOf(new EnumSet([0])).toExtend<Set<0>>();
+});

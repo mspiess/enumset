@@ -1,6 +1,6 @@
 import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
 
-export class EnumSet<T extends IntegerLessThan32> {
+export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
   get [Symbol.toStringTag]() {
     return 'EnumSet';
   };
@@ -74,11 +74,11 @@ export class EnumSet<T extends IntegerLessThan32> {
     }
   }
 
-  keys(): Iterator<T, void, unknown> {
+  keys(): SetIterator<T> {
     return this.values();
   }
 
-  * values(): Iterator<T, void, unknown> {
+  * values(): SetIterator<T> {
     let n = this.#bitfield >>> 0;
     while (n) {
       const leastSignificantBitFlipped = n - 1;
@@ -89,13 +89,13 @@ export class EnumSet<T extends IntegerLessThan32> {
     }
   };
 
-  * entries(): Iterator<[T, T], void, unknown> {
+  * entries(): SetIterator<[T, T]> {
     for (const value of this) {
       yield [value, value];
     }
   }
 
-  [Symbol.iterator](): Iterator<T, void, unknown> {
+  [Symbol.iterator](): SetIterator<T> {
     return this.values();
   }
 
