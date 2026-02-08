@@ -1,7 +1,12 @@
 import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
 
 export class EnumSet<T extends IntegerLessThan32> {
-  [Symbol.toStringTag] = 'EnumSet';
+  get [Symbol.toStringTag]() {
+    return 'EnumSet';
+  };
+
+  set [Symbol.toStringTag](_value) {
+  }
 
   #bitfield: number = 0;
 

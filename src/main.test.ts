@@ -157,4 +157,12 @@ describe('Symbol.toStringTag', () => {
 
     expect(toStringTag).toEqual('EnumSet');
   });
+
+  test('should not be writable', () => {
+    const enumSet = new EnumSet();
+
+    enumSet[Symbol.toStringTag] = 'Bad';
+
+    expect(enumSet[Symbol.toStringTag]).toEqual('EnumSet');
+  });
 });
