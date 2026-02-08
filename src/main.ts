@@ -6,7 +6,7 @@ export class EnumSet<T extends IntegerLessThan32> {
   constructor(iterable?: Iterable<T>) {
     if (iterable) {
       for (const value of iterable) {
-        this.#bitfield |= (1 << value);
+        this.#bitfield |= this.#toBit(value);
       }
     }
   }
@@ -24,11 +24,11 @@ export class EnumSet<T extends IntegerLessThan32> {
   }
 
   has(value: T): boolean {
-    return Boolean(this.#bitfield & (1 << value));
+    return Boolean(this.#bitfield & this.#toBit(value));
   }
 
   add(value: T): this {
-    this.#bitfield |= (1 << value);
+    this.#bitfield |= this.#toBit(value);
     return this;
   }
 
@@ -38,7 +38,7 @@ export class EnumSet<T extends IntegerLessThan32> {
 
   delete(value: T): boolean {
     const has = this.has(value);
-    this.#bitfield ^= (1 << value);
+    this.#bitfield ^= this.#toBit(value);
     return has;
   }
 
@@ -49,6 +49,7 @@ export class EnumSet<T extends IntegerLessThan32> {
    * @param {ForEachCallback<T, undefined>} callback A function to execute for each entry in the set.
    */
   forEach(callback: ForEachCallback<T, undefined>): void;
+
   /**
    * Executes {@link callback} once for each value in this set, in the numeric order of the enum {@link T}.
    *
@@ -67,6 +68,10 @@ export class EnumSet<T extends IntegerLessThan32> {
       callback.call(thisArg, value, value, this);
       n = next;
     }
+  }
+
+  #toBit(value: T) {
+    return 1 << value;
   }
 }
 
