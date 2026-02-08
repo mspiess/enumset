@@ -1,6 +1,8 @@
 import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
 
 export class EnumSet<T extends IntegerLessThan32> {
+  [Symbol.toStringTag] = 'EnumSet';
+
   #bitfield: number = 0;
 
   constructor(iterable?: Iterable<T>) {

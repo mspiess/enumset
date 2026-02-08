@@ -150,3 +150,11 @@ describe('entries', () => {
     expect(end.done).toBe(true);
   });
 });
+
+describe('Symbol.toStringTag', () => {
+  test('should have value "EnumSet"', () => {
+    const toStringTag = new EnumSet()[Symbol.toStringTag];
+
+    expect(toStringTag).toEqual('EnumSet');
+  });
+});
