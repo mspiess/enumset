@@ -8,6 +8,8 @@ const Directions = {
   Down: 3,
 } as const;
 
+type Direction = typeof Directions[keyof typeof Directions];
+
 test('should initialize empty', () => {
   const enumSet = new EnumSet();
 
@@ -71,6 +73,22 @@ describe('delete', () => {
 
     expect(enumSet.has(Directions.Left)).toBe(false);
     expect(enumSet.has(Directions.Right)).toBe(true);
+  });
+
+  test('should return false if value was not in the set', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left]);
+
+    const deleted = enumSet.delete(Directions.Right);
+
+    expect(deleted).toBe(false);
+  });
+
+  test('should return true if value was in the set', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left]);
+
+    const deleted = enumSet.delete(Directions.Left);
+
+    expect(deleted).toBe(true);
   });
 });
 
