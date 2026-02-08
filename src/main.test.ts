@@ -135,3 +135,17 @@ describe.for([
     expect(end.done).toBe(true);
   });
 });
+
+describe('entries', () => {
+  test('should return iterator similar to a Map object', () => {
+    const enumSet = new EnumSet([Directions.Left, Directions.Right]);
+
+    const iterable = enumSet.entries();
+
+    expect(iterable.next().value).toEqual([Directions.Left, Directions.Left]);
+    expect(iterable.next().value).toEqual([Directions.Right, Directions.Right]);
+    const end = iterable.next();
+    expect(end.value).toBeUndefined();
+    expect(end.done).toBe(true);
+  });
+});

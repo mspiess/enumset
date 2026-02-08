@@ -89,6 +89,12 @@ export class EnumSet<T extends IntegerLessThan32> {
   #hasBit(bit: number) {
     return Boolean(this.#bitfield & bit);
   }
+
+  * entries(): Iterator<[T, T], void, unknown> {
+    for (const value of this) {
+      yield [value, value];
+    }
+  }
 }
 
 /**
