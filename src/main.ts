@@ -25,7 +25,7 @@ export class EnumSet<T extends IntegerLessThan32> {
 
   has(value: T): boolean {
     const bit = this.#toBit(value);
-    return Boolean(this.#bitfield & bit);
+    return this.#hasBit(bit);
   }
 
   add(value: T): this {
@@ -60,6 +60,7 @@ export class EnumSet<T extends IntegerLessThan32> {
    * @param {This} thisArg A value to use as `this` when executing {@link callback}.
    */
   forEach<This>(callback: ForEachCallback<T, This>, thisArg: This): void;
+
   forEach<This = undefined>(callback: (this: This | undefined, value: T, key: T, set: EnumSet<T>) => void, thisArg?: This) {
     let n = this.#bitfield >>> 0;
     while (n) {
@@ -73,6 +74,10 @@ export class EnumSet<T extends IntegerLessThan32> {
 
   #toBit(value: T) {
     return 1 << value;
+  }
+
+  #hasBit(bit: number) {
+    return Boolean(this.#bitfield & bit);
   }
 }
 
