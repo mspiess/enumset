@@ -165,4 +165,21 @@ describe('Symbol.toStringTag', () => {
 
     expect(enumSet[Symbol.toStringTag]).toEqual('EnumSet');
   });
+
+  test('should not be enumerable', () => {
+    const enumSet = new EnumSet();
+
+    const prototypeProperties = Object.getOwnPropertyNames(Object.getPrototypeOf(enumSet));
+
+    expect(prototypeProperties).not.toContain(Symbol.toStringTag);
+  });
+
+  test('should not be deletable', () => {
+    const enumSet = new EnumSet();
+
+    // @ts-expect-error toStringTag is not optional
+    delete enumSet[Symbol.toStringTag];
+
+    expect(enumSet[Symbol.toStringTag]).toEqual('EnumSet');
+  });
 });
