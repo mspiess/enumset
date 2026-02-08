@@ -119,6 +119,7 @@ describe('forEach', () => {
 });
 
 describe.for([
+  { method: 'keys' as const },
   { method: 'values' as const },
   // workaround for https://github.com/microsoft/TypeScript/issues/54100
   { method: Symbol.iterator } as { method: typeof Symbol.iterator },

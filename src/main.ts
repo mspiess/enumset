@@ -67,6 +67,10 @@ export class EnumSet<T extends IntegerLessThan32> {
     }
   }
 
+  keys(): Iterator<T, void, unknown> {
+    return this.values();
+  }
+
   * values(): Iterator<T, void, unknown> {
     let n = this.#bitfield >>> 0;
     while (n) {
