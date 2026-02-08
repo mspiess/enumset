@@ -118,11 +118,13 @@ describe('forEach', () => {
   });
 });
 
-describe('values', () => {
+describe.for([
+  { method: 'values' as const },
+])('values', ({ method }) => {
   test('should return iterator through elements', () => {
     const enumSet = new EnumSet([Directions.Left, Directions.Right]);
 
-    const iterable = enumSet.values();
+    const iterable = enumSet[method]();
 
     expect(iterable.next().value).toEqual(Directions.Left);
     expect(iterable.next().value).toEqual(Directions.Right);
