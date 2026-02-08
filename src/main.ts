@@ -69,7 +69,7 @@ export class EnumSet<T extends IntegerLessThan32> {
     }
   }
 
-  * values(): Iterator<T> {
+  * values(): Iterator<T, undefined> {
     let n = this.#bitfield >>> 0;
     while (n) {
       const leastSignificantBitFlipped = n - 1;
@@ -79,6 +79,10 @@ export class EnumSet<T extends IntegerLessThan32> {
       n = next;
     }
   };
+
+  [Symbol.iterator](): Iterator<T, undefined> {
+    return this.values();
+  }
 
   #toBit(value: T) {
     return 1 << value;

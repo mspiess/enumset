@@ -120,6 +120,8 @@ describe('forEach', () => {
 
 describe.for([
   { method: 'values' as const },
+  // workaround for https://github.com/microsoft/TypeScript/issues/54100
+  { method: Symbol.iterator } as { method: typeof Symbol.iterator },
 ])('values', ({ method }) => {
   test('should return iterator through elements', () => {
     const enumSet = new EnumSet([Directions.Left, Directions.Right]);
