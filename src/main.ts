@@ -38,9 +38,9 @@ export class EnumSet<T extends IntegerLessThan32> {
 
   delete(value: T): boolean {
     const bit = this.#toBit(value);
-    const has = this.#hasBit(bit);
+    const had = this.#hasBit(bit);
     this.#bitfield ^= bit;
-    return has;
+    return had;
   }
 
   /**
