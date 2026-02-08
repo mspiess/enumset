@@ -72,6 +72,17 @@ export class EnumSet<T extends IntegerLessThan32> {
     }
   }
 
+  * values(): Iterator<T> {
+    let n = this.#bitfield >>> 0;
+    while (n) {
+      const leastSignificantBitFlipped = n - 1;
+      const next = n & leastSignificantBitFlipped;
+      const value = Math.log2(n ^ next) as T;
+      yield value;
+      n = next;
+    }
+  };
+
   #toBit(value: T) {
     return 1 << value;
   }

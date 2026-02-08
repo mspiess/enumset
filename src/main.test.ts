@@ -117,3 +117,17 @@ describe('forEach', () => {
     expect(actual).toBe(thisArg);
   });
 });
+
+describe('values', () => {
+  test('should return iterator through elements', () => {
+    const enumSet = new EnumSet([Directions.Left, Directions.Right]);
+
+    const iterable = enumSet.values();
+
+    expect(iterable.next().value).toEqual(Directions.Left);
+    expect(iterable.next().value).toEqual(Directions.Right);
+    const end = iterable.next();
+    expect(end.value).toBeUndefined();
+    expect(end.done).toBe(true);
+  });
+});
