@@ -62,14 +62,12 @@ export class EnumSet<T extends IntegerLessThan32> {
   forEach<This>(callback: ForEachCallback<T, This>, thisArg: This): void;
 
   forEach<This = undefined>(callback: (this: This | undefined, value: T, key: T, set: EnumSet<T>) => void, thisArg?: This) {
-    const iterator = this.values();
-    for (let iteratorResult = iterator.next(); !iteratorResult.done; iteratorResult = iterator.next()) {
-      const value = iteratorResult.value;
+    for (const value of this) {
       callback.call(thisArg, value, value, this);
     }
   }
 
-  * values(): Iterator<T, undefined> {
+  * values(): Iterator<T, void, unknown> {
     let n = this.#bitfield >>> 0;
     while (n) {
       const leastSignificantBitFlipped = n - 1;
@@ -80,7 +78,7 @@ export class EnumSet<T extends IntegerLessThan32> {
     }
   };
 
-  [Symbol.iterator](): Iterator<T, undefined> {
+  [Symbol.iterator](): Iterator<T, void, unknown> {
     return this.values();
   }
 
