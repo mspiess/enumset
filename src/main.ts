@@ -24,7 +24,8 @@ export class EnumSet<T extends IntegerLessThan32> {
   }
 
   has(value: T): boolean {
-    return Boolean(this.#bitfield & this.#toBit(value));
+    const bit = this.#toBit(value);
+    return Boolean(this.#bitfield & bit);
   }
 
   add(value: T): this {
