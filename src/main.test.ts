@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 import { EnumSet } from './main.ts';
+import { SetLikeStub } from './SetLikeStub.ts';
 
 const Directions = {
   Left: 0,
@@ -181,5 +182,150 @@ describe('Symbol.toStringTag', () => {
     delete enumSet[Symbol.toStringTag];
 
     expect(enumSet[Symbol.toStringTag]).toEqual('EnumSet');
+  });
+});
+
+describe('union', () => {
+  test('should return union with other EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const union = enumSet.union(new EnumSet([Directions.Up, Directions.Right]));
+
+    expect([...union]).toEqual([Directions.Left, Directions.Up, Directions.Right]);
+  });
+
+  test('should return union with set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+    const setLike = new SetLikeStub([Directions.Up, 'someValue']);
+    const union = enumSet.union(setLike);
+
+    expect([...union]).toEqual([Directions.Left, Directions.Up, 'someValue']);
+  });
+});
+
+describe('intersection', () => {
+  test('should return intersection with other EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const intersection = enumSet.intersection(new EnumSet([Directions.Up, Directions.Right]));
+
+    expect([...intersection]).toEqual([Directions.Up]);
+  });
+
+  test('should return intersection with set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+    const setLike = new SetLikeStub([Directions.Up, 'someValue']);
+
+    const intersection = enumSet.intersection(setLike);
+
+    expect([...intersection]).toEqual([Directions.Up]);
+  });
+});
+
+describe('difference', () => {
+  test('should return difference with other EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const difference = enumSet.difference(new EnumSet([Directions.Up, Directions.Right]));
+
+    expect([...difference]).toEqual([Directions.Left]);
+  });
+
+  test('should return difference with set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+    const setLike = new SetLikeStub([Directions.Up, 'someValue']);
+
+    const difference = enumSet.difference(setLike);
+
+    expect([...difference]).toEqual([Directions.Left]);
+  });
+});
+
+describe('symmetricDifference', () => {
+  test('should return symmetric difference with other EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const symmetricDifference = enumSet.symmetricDifference(new EnumSet([Directions.Up, Directions.Right]));
+
+    expect([...symmetricDifference]).toEqual([Directions.Left, Directions.Right]);
+  });
+
+  test('should return symmetric difference with set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+    const setLike = new SetLikeStub([Directions.Up, 'someValue']);
+
+    const symmetricDifference = enumSet.symmetricDifference(setLike);
+
+    expect([...symmetricDifference]).toEqual([Directions.Left, 'someValue']);
+  });
+});
+
+describe('isSubsetOf', () => {
+  test('should be subset of superset EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const isSubset = enumSet.isSubsetOf(new EnumSet<Direction>([Directions.Left, Directions.Up, Directions.Right]));
+
+    expect(isSubset).toBe(true);
+  });
+
+  test('should not be subset of non-superset EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const isSubset = enumSet.isSubsetOf(new EnumSet([Directions.Left]));
+
+    expect(isSubset).toBe(false);
+  });
+
+  test('should be subset of superset set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left]);
+
+    const isSubset = enumSet.isSubsetOf(new SetLikeStub([Directions.Left, 'someValue']));
+
+    expect(isSubset).toBe(true);
+  });
+});
+
+describe('isSupersetOf', () => {
+  test('should be superset of subset EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const isSuperset = enumSet.isSupersetOf(new EnumSet([Directions.Left]));
+
+    expect(isSuperset).toBe(true);
+  });
+
+  test('should be superset of subset set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const isSuperset = enumSet.isSupersetOf(new SetLikeStub([Directions.Left]));
+
+    expect(isSuperset).toBe(true);
+  });
+});
+
+describe('isDisjointFrom', () => {
+  test('should be disjoint from EnumSet', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left]);
+
+    const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Right]));
+
+    expect(isDisjoint).toBe(true);
+  });
+
+  test('should not be disjoint from EnumSet with shared element', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+    const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Up, Directions.Right]));
+
+    expect(isDisjoint).toBe(false);
+  });
+
+  test('should be disjoint from set-like', () => {
+    const enumSet = new EnumSet<Direction>([Directions.Left]);
+
+    const isDisjoint = enumSet.isDisjointFrom(new SetLikeStub(['someValue']));
+
+    expect(isDisjoint).toBe(true);
   });
 });

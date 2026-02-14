@@ -33,3 +33,7 @@ test('should not admit number type', () => {
 test('should be assignable to Set', () => {
   expectTypeOf(new EnumSet([0])).toExtend<Set<0>>();
 });
+
+test('should return a Set of type union', () => {
+  expectTypeOf(new EnumSet([0]).union(new Set(['someValue']))).toEqualTypeOf<Set<0 | string>>();
+});

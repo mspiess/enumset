@@ -30,7 +30,18 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
     return size;
   }
 
+  has(value: T): boolean;
+  has<U>(value: U): value is T & U;
   has(value: T): boolean {
+    if (typeof value !== 'number') {
+      return false;
+    }
+    if (value > 31) {
+      return false;
+    }
+    if (value < 0) {
+      return false;
+    }
     return this.#hasBit(this.#toBit(value));
   }
 
@@ -105,6 +116,90 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
 
   #hasBit(bit: number) {
     return Boolean(this.#bitfield & bit);
+  }
+
+  union(other: EnumSet<T>): EnumSet<T>;
+  union<U>(other: ReadonlySetLike<U>): Set<T | U>;
+  union<U>(other: ReadonlySetLike<U>): Set<T | U> {
+    if (other instanceof EnumSet) {
+      const result = new EnumSet<T>();
+      result.#bitfield = this.#bitfield | other.#bitfield;
+      return result;
+    }
+    return new Set<T | U>([...this.keys(), ...{ [Symbol.iterator]: () => other.keys() }]);
+  }
+
+  intersection<U extends IntegerLessThan32>(other: EnumSet<U>): EnumSet<T & U>;
+  intersection<U>(other: ReadonlySetLike<U>): Set<T & U>;
+  intersection<U>(other: ReadonlySetLike<U>): Set<T & U> {
+    if (other instanceof EnumSet) {
+      const result = new EnumSet<T & U>();
+      result.#bitfield = this.#bitfield & other.#bitfield;
+      return result;
+    }
+    const intersection: (T & U)[] = [];
+    for (const key of [...{ [Symbol.iterator]: () => other.keys() }]) {
+      if (this.has(key)) {
+        intersection.push(key);
+      }
+    }
+    return new Set<T & U>(intersection);
+  }
+
+  difference<U extends IntegerLessThan32>(other: EnumSet<U>): EnumSet<T>;
+  difference<U>(other: ReadonlySetLike<U>): Set<T>;
+  difference<U>(other: ReadonlySetLike<U>): Set<T> {
+    if (other instanceof EnumSet) {
+      const result = new EnumSet<T>();
+      result.#bitfield = this.#bitfield & (~other.#bitfield);
+      return result;
+    }
+    return new Set<T>([...this].filter(value => !other.has(value as unknown as U)));
+  }
+
+  symmetricDifference(other: EnumSet<T>): EnumSet<T>;
+  symmetricDifference<U>(other: ReadonlySetLike<U>): Set<T | U>;
+  symmetricDifference<U>(other: ReadonlySetLike<U>): Set<T | U> {
+    if (other instanceof EnumSet) {
+      const result = new EnumSet<T>();
+      result.#bitfield = this.#bitfield ^ other.#bitfield;
+      return result;
+    }
+    const union = this.union(other);
+    const intersection = this.intersection(other);
+    // return union.difference(intersection);
+    return new Set([...union].filter(value => !intersection.has(value as T & U)));
+  }
+
+  isSubsetOf(other: ReadonlySetLike<unknown>) {
+    if (other instanceof EnumSet) {
+      return this.#bitfield === (this.#bitfield & other.#bitfield);
+    }
+    for (const value of this) {
+      if (!other.has(value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isSupersetOf(other: ReadonlySetLike<unknown>): boolean {
+    if (other instanceof EnumSet) {
+      return other.isSubsetOf(this);
+    }
+    return [...{ [Symbol.iterator]: () => other.keys() }].every(value => this.has(value));
+  }
+
+  isDisjointFrom(other: ReadonlySetLike<unknown>) {
+    if (other instanceof EnumSet) {
+      return (this.#bitfield & other.#bitfield) === 0;
+    }
+    for (const value of this) {
+      if (other.has(value)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 
