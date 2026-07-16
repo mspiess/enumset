@@ -123,6 +123,7 @@ describe.for([
   { method: 'keys' as const },
   { method: 'values' as const },
   // workaround for https://github.com/microsoft/TypeScript/issues/54100
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   { method: Symbol.iterator } as { method: typeof Symbol.iterator },
 ])('values', ({ method }) => {
   test('should return iterator through elements', () => {
