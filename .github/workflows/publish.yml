@@ -25,3 +25,4 @@ jobs:
       - uses: changesets/action@v1
         with:
           publish: npm run release
+          commit: "chore: version packages"
