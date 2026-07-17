@@ -20,7 +20,7 @@
     "lint": "eslint src/",
     "test": "vitest --typecheck --run",
     "changeset": "changeset",
-    "release": "npm run build && changeset git-tag && npm publish --provenance --access public"
+    "release": "npm run build && changeset tag && npm publish --provenance --access public"
   },
   "private": false,
   "author": "Marco Spieß <marco.spiess@proton.me>",
