@@ -50,7 +50,7 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
     return this;
   }
 
-  clear() {
+  clear(): void {
     this.#bitfield = 0;
   }
 
@@ -171,7 +171,7 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
     return new Set([...union].filter(value => !intersection.has(value as T & U)));
   }
 
-  isSubsetOf(other: ReadonlySetLike<unknown>) {
+  isSubsetOf(other: ReadonlySetLike<unknown>): boolean {
     if (other instanceof EnumSet) {
       return this.#bitfield === (this.#bitfield & other.#bitfield);
     }
@@ -190,7 +190,7 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
     return [...{ [Symbol.iterator]: () => other.keys() }].every(value => this.has(value));
   }
 
-  isDisjointFrom(other: ReadonlySetLike<unknown>) {
+  isDisjointFrom(other: ReadonlySetLike<unknown>): boolean {
     if (other instanceof EnumSet) {
       return (this.#bitfield & other.#bitfield) === 0;
     }
@@ -209,7 +209,7 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
  * @template This
  * @param {T} value Value of each iteration.
  * @param {T} key Key of each iteration. This is always the same as {@link value}.
- * @param {EnumSet<T>} The set being iterated.
+ * @param {EnumSet<T>} set The set being iterated.
  * @this {This}
  */
 type ForEachCallback<T extends IntegerLessThan32, This> = (this: This, value: T, key: T, set: EnumSet<T>) => void;
