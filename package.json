@@ -48,5 +48,8 @@
     "unplugin-dts": "^1.0.3",
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "vite-plugin-doctest": "^3.0.0"
   }
 }
