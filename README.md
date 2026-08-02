@@ -1,5 +1,6 @@
 # EnumSet
 
+[![NPM Version](https://img.shields.io/npm/v/%40marco.spiess%2Fenumset)](https://www.npmjs.com/package/@marco.spiess/enumset)
 ![NPM License](https://img.shields.io/npm/l/%40marco.spiess%2Fenumset)
 [![Coverage Status](https://coveralls.io/repos/github/mspiess/enumset/badge.svg?branch=main)](https://coveralls.io/github/mspiess/enumset?branch=main)
 
