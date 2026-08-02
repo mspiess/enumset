@@ -1,5 +1,13 @@
 # @marco.spiess/enumset
 
+## 0.0.3
+
+### Patch Changes
+
+- ae5096c: Add coverage badge
+- ac6d576: Add usage example to README
+- 3332c68: Fix value 31 being emitted as NaN from iteration
+
 ## 0.0.2
 
 ### Patch Changes
