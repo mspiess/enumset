@@ -27,6 +27,7 @@
     "build": "tsc && vite build",
     "lint": "eslint src/",
     "test": "vitest --typecheck --run",
+    "benchmark": "vitest bench",
     "changeset": "changeset",
     "release": "npm run build && changeset tag && npm publish --provenance --access public"
   },
