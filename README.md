@@ -1,5 +1,7 @@
 # EnumSet
 
+[![Coverage Status](https://coveralls.io/repos/github/mspiess/enumset/badge.svg?branch=main)](https://coveralls.io/github/mspiess/enumset?branch=main)
+
 A specialized [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) implementation
 for use with numerical enum types.
 All state is packed into a single 32-bit integer bitfield.
