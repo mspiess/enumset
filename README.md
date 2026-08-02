@@ -1,5 +1,6 @@
 # EnumSet
 
+![NPM License](https://img.shields.io/npm/l/%40marco.spiess%2Fenumset)
 [![Coverage Status](https://coveralls.io/repos/github/mspiess/enumset/badge.svg?branch=main)](https://coveralls.io/github/mspiess/enumset?branch=main)
 
 A specialized [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) implementation
