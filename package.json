@@ -47,7 +47,7 @@
     "@microsoft/api-extractor": "7.58.12",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/node": "26.2.0",
-    "@vitest/coverage-v8": "4.1.10",
+    "@vitest/coverage-v8": "5.0.0-rc.2",
     "@vitest/eslint-plugin": "1.6.27",
     "eslint": "10.8.1",
     "globals": "17.9.0",
@@ -56,6 +56,11 @@
     "unplugin-dts": "1.0.3",
     "vite": "8.2.1",
     "vite-plugin-doctest": "3.0.0",
-    "vitest": "4.1.10"
+    "vitest": "5.0.0-rc.2"
+  },
+  "overrides": {
+    "vite-plugin-doctest": {
+      "vitest": "5.0.0-rc.2"
+    }
   }
 }
