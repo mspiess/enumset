@@ -16,6 +16,7 @@
       "require": "./dist/enumset.umd.cjs"
     }
   },
+  "sideEffects": false,
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
