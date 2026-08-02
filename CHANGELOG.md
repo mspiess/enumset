@@ -1,5 +1,11 @@
 # @marco.spiess/enumset
 
+## 0.0.4
+
+### Patch Changes
+
+- 7a3442f: Add npm version badge to README
+
 ## 0.0.3
 
 ### Patch Changes

@@ -1,8 +1,13 @@
 {
   "name": "@marco.spiess/enumset",
   "description": "A specialized Set implementation for use with numerical enum types. All state is packed into a single 32-bit integer bitfield.",
-  "keywords": ["enumset", "enum", "set", "bitfield"],
-  "version": "0.0.3",
+  "keywords": [
+    "enumset",
+    "enum",
+    "set",
+    "bitfield"
+  ],
+  "version": "0.0.4",
   "type": "module",
   "files": [
     "dist"
