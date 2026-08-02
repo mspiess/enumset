@@ -94,7 +94,7 @@ export class EnumSet<T extends IntegerLessThan32> implements Set<T> {
     while (n) {
       const leastSignificantBitFlipped = n - 1;
       const next = n & leastSignificantBitFlipped;
-      const value = Math.log2(n ^ next) as T;
+      const value = Math.log2((n ^ next) >>> 0) as T;
       yield value;
       n = next;
     }

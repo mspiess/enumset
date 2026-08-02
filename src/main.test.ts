@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from 'vitest';
 import { EnumSet } from './main.ts';
 import { SetLikeStub } from './SetLikeStub.ts';
+import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
 
 const Directions = {
   Left: 0,
@@ -10,6 +11,8 @@ const Directions = {
 } as const;
 
 type Direction = typeof Directions[keyof typeof Directions];
+
+const allValues = [...Array(32).keys()] as IntegerLessThan32[];
 
 test('should initialize empty', () => {
   const enumSet = new EnumSet();
@@ -136,6 +139,14 @@ describe.for([
     const end = iterable.next();
     expect(end.value).toBeUndefined();
     expect(end.done).toBe(true);
+  });
+
+  test('should iterate through all values', () => {
+    const enumSet = new EnumSet(allValues);
+
+    const iterable = enumSet[method]();
+
+    expect([...iterable]).toStrictEqual(allValues);
   });
 });
 
