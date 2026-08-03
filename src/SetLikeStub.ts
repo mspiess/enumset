@@ -1,3 +1,4 @@
+/* v8 ignore file -- @preserve */
 export class SetLikeStub<T> implements ReadonlySetLike<T> {
   readonly #elements: T[];
   constructor(iterable: Iterable<T>) {
