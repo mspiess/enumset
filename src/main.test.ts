@@ -128,7 +128,7 @@ describe.for([
   // workaround for https://github.com/microsoft/TypeScript/issues/54100
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   { method: Symbol.iterator } as { method: typeof Symbol.iterator },
-])('values', ({ method }) => {
+])('$method', ({ method }) => {
   test('should return iterator through elements', () => {
     const enumSet = new EnumSet([Directions.Left, Directions.Right]);
 
