@@ -6,6 +6,7 @@ import {defineConfig} from "eslint/config";
 import stylistic from '@stylistic/eslint-plugin'
 import vitest from '@vitest/eslint-plugin'
 
+const stylisticConfig = stylistic.configs.customize({semi: true});
 export default defineConfig([
   {
     files: ['**/*.test.ts', '**/*.test-d.ts'],
@@ -20,9 +21,13 @@ export default defineConfig([
         typecheck: true,
       },
     },
-  },
-  stylistic.configs.customize({ semi: true }),
-  {
+  }, {
+    ...stylisticConfig,
+    rules: {
+      ...stylisticConfig.rules,
+      '@stylistic/array-bracket-newline': 'error',
+    }
+  }, {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     plugins: {js},
     extends: ["js/recommended"],
