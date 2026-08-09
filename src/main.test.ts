@@ -277,28 +277,40 @@ describe('symmetricDifference', () => {
 });
 
 describe('isSubsetOf', () => {
-  test('should be subset of superset EnumSet', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+  describe('EnumSet', () => {
+    test('should be subset of superset', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
 
-    const isSubset = enumSet.isSubsetOf(new EnumSet<Direction>([Directions.Left, Directions.Up, Directions.Right]));
+      const isSubset = enumSet.isSubsetOf(new EnumSet<Direction>([Directions.Left, Directions.Up, Directions.Right]));
 
-    expect(isSubset).toBe(true);
+      expect(isSubset).toBe(true);
+    });
+
+    test('should not be subset of non-superset', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+      const isSubset = enumSet.isSubsetOf(new EnumSet([Directions.Left]));
+
+      expect(isSubset).toBe(false);
+    });
   });
 
-  test('should not be subset of non-superset EnumSet', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+  describe('Set-like', () => {
+    test('should be subset of superset set-like', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left]);
 
-    const isSubset = enumSet.isSubsetOf(new EnumSet([Directions.Left]));
+      const isSubset = enumSet.isSubsetOf(new SetLikeStub([Directions.Left, 'someValue']));
 
-    expect(isSubset).toBe(false);
-  });
+      expect(isSubset).toBe(true);
+    });
 
-  test('should be subset of superset set-like', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left]);
+    test('should not be subset of non-superset', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
 
-    const isSubset = enumSet.isSubsetOf(new SetLikeStub([Directions.Left, 'someValue']));
+      const isSubset = enumSet.isSubsetOf(new SetLikeStub([Directions.Left, 'someValue']));
 
-    expect(isSubset).toBe(true);
+      expect(isSubset).toBe(false);
+    });
   });
 });
 
