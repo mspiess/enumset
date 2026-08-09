@@ -333,27 +333,39 @@ describe('isSupersetOf', () => {
 });
 
 describe('isDisjointFrom', () => {
-  test('should be disjoint from EnumSet', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left]);
+  describe('EnumSet', () => {
+    test('should be disjoint', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left]);
 
-    const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Right]));
+      const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Right]));
 
-    expect(isDisjoint).toBe(true);
+      expect(isDisjoint).toBe(true);
+    });
+
+    test('should not be disjoint from set with shared element', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+      const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Up, Directions.Right]));
+
+      expect(isDisjoint).toBe(false);
+    });
   });
 
-  test('should not be disjoint from EnumSet with shared element', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+  describe('Set-like', () => {
+    test('should be disjoint from set-like', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left]);
 
-    const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Up, Directions.Right]));
+      const isDisjoint = enumSet.isDisjointFrom(new SetLikeStub(['someValue']));
 
-    expect(isDisjoint).toBe(false);
-  });
+      expect(isDisjoint).toBe(true);
+    });
 
-  test('should be disjoint from set-like', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left]);
+    test('should not be disjoint from set with shared element', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
 
-    const isDisjoint = enumSet.isDisjointFrom(new SetLikeStub(['someValue']));
+      const isDisjoint = enumSet.isDisjointFrom(new SetLikeStub([Directions.Up, 'someValue']));
 
-    expect(isDisjoint).toBe(true);
+      expect(isDisjoint).toBe(false);
+    });
   });
 });
