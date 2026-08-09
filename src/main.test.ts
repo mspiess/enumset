@@ -39,10 +39,14 @@ test('should have member from initialization', () => {
   expect(enumSet.has(Directions.Left)).toEqual(true);
 });
 
-test('should not have element in empty set', () => {
-  const enumSet = new EnumSet();
+test.each([
+  { name: 'element in empty set', value: Directions.Left },
+  { name: 'a number greater than 31', value: 32 },
+  { name: 'a negative number', value: -1 },
+])('should not have $name', ({ value }) => {
+  const set = new EnumSet();
 
-  expect(enumSet.has(Directions.Left)).toEqual(false);
+  expect(set.has(value)).toEqual(false);
 });
 
 test('should have element after adding it', () => {
