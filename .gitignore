@@ -23,3 +23,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# stryker temp files
+.stryker-tmp
+reports/mutation

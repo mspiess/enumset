@@ -30,3 +30,7 @@ jobs:
       run: npm test -- --coverage
     - if: ${{ matrix.node-version == '26.x' }}
       uses: coverallsapp/github-action@v2
+    - if: ${{ matrix.node-version == '26.x' }}
+      run: npm run test:mutation
+      env:
+        STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

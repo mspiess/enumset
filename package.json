@@ -27,6 +27,7 @@
     "build": "tsc && vite build",
     "lint": "eslint src/",
     "test": "vitest --typecheck --run",
+    "test:mutation": "stryker run",
     "changeset": "changeset",
     "release": "npm run build && changeset tag && npm publish --provenance --access public"
   },
@@ -45,6 +46,9 @@
     "@eslint/js": "10.0.1",
     "@eslint/markdown": "8.0.3",
     "@microsoft/api-extractor": "7.58.12",
+    "@stryker-mutator/core": "^10.0.0",
+    "@stryker-mutator/typescript-checker": "^10.0.0",
+    "@stryker-mutator/vitest-runner": "^10.0.0",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/node": "26.2.0",
     "@vitest/coverage-v8": "4.1.10",
