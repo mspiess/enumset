@@ -18,7 +18,8 @@ export default defineConfig({
         preamble: `const { EnumSet } = await import('./src/main.ts');
     `,
       },
-    })],
+    }),
+  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/main.ts'),
@@ -28,5 +29,8 @@ export default defineConfig({
   },
   test: {
     includeSource: ['./**/*.md'],
+    coverage: {
+      exclude: ['src/SetLikeStub.ts'],
+    },
   },
 });
