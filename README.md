@@ -3,6 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/%40marco.spiess%2Fenumset)](https://www.npmjs.com/package/@marco.spiess/enumset)
 ![NPM License](https://img.shields.io/npm/l/%40marco.spiess%2Fenumset)
 [![Coverage Status](https://coveralls.io/repos/github/mspiess/enumset/badge.svg?branch=main)](https://coveralls.io/github/mspiess/enumset?branch=main)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fmspiess%2Fenumset%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/mspiess/enumset/main)
 
 A specialized [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) implementation
 for use with numerical enum types.
