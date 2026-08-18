@@ -9,6 +9,8 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   build:
     uses: $/.github/workflows/node.js.yml
+    secrets:
+      STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
   publish:
     needs: build
     runs-on: ubuntu-latest
