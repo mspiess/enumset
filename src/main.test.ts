@@ -33,10 +33,10 @@ test('should throw when trying to set size', () => {
   expect(() => enumSet.size = 1).toThrow();
 });
 
-test('should have member from initialization', () => {
-  const enumSet = new EnumSet([Directions.Left]);
+test.for([{ value: Directions.Left }, { value: 31 as const }])('should have member from initialization', ({ value }) => {
+  const enumSet = new EnumSet([value]);
 
-  expect(enumSet.has(Directions.Left)).toEqual(true);
+  expect(enumSet.has(value)).toEqual(true);
 });
 
 test.each([
