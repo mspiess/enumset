@@ -39,12 +39,12 @@ test.for([{ value: Directions.Left }, { value: 31 as const }])('should have memb
   expect(enumSet.has(value)).toEqual(true);
 });
 
-test.each([
-  { name: 'element in empty set', value: Directions.Left },
-  { name: 'a number greater than 31', value: 32 },
-  { name: 'a negative number', value: -1 },
-])('should not have $name', ({ value }) => {
-  const set = new EnumSet();
+test.for<{ name: string; value: number; initialValues: IntegerLessThan32[] }>([
+  { name: 'element in empty set', value: Directions.Left, initialValues: [] },
+  { name: 'a number greater than 31', value: 32, initialValues: [0] },
+  { name: 'a negative number', value: -1, initialValues: [0, 1, 31] },
+])('should not have $name', ({ value, initialValues }) => {
+  const set = new EnumSet(initialValues);
 
   expect(set.has(value)).toEqual(false);
 });
