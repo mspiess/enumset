@@ -207,6 +207,7 @@ describe('union', () => {
 
     const union = enumSet.union(new EnumSet([Directions.Up, Directions.Right]));
 
+    expect(union).toBeInstanceOf(EnumSet);
     expect([...union]).toEqual([Directions.Left, Directions.Up, Directions.Right]);
   });
 
@@ -215,6 +216,7 @@ describe('union', () => {
     const setLike = new SetLikeStub([Directions.Up, 'someValue']);
     const union = enumSet.union(setLike);
 
+    expect(union).toBeInstanceOf(Set);
     expect([...union]).toEqual([Directions.Left, Directions.Up, 'someValue']);
   });
 });
@@ -225,6 +227,7 @@ describe('intersection', () => {
 
     const intersection = enumSet.intersection(new EnumSet([Directions.Up, Directions.Right]));
 
+    expect(intersection).toBeInstanceOf(EnumSet);
     expect([...intersection]).toEqual([Directions.Up]);
   });
 
@@ -234,6 +237,7 @@ describe('intersection', () => {
 
     const intersection = enumSet.intersection(setLike);
 
+    expect(intersection).toBeInstanceOf(Set);
     expect([...intersection]).toEqual([Directions.Up]);
   });
 });
@@ -244,6 +248,7 @@ describe('difference', () => {
 
     const difference = enumSet.difference(new EnumSet([Directions.Up, Directions.Right]));
 
+    expect(difference).toBeInstanceOf(EnumSet);
     expect([...difference]).toEqual([Directions.Left]);
   });
 
@@ -253,6 +258,7 @@ describe('difference', () => {
 
     const difference = enumSet.difference(setLike);
 
+    expect(difference).toBeInstanceOf(Set);
     expect([...difference]).toEqual([Directions.Left]);
   });
 });
@@ -263,6 +269,7 @@ describe('symmetricDifference', () => {
 
     const symmetricDifference = enumSet.symmetricDifference(new EnumSet([Directions.Up, Directions.Right]));
 
+    expect(symmetricDifference).toBeInstanceOf(EnumSet);
     expect([...symmetricDifference]).toEqual([Directions.Left, Directions.Right]);
   });
 
@@ -272,6 +279,7 @@ describe('symmetricDifference', () => {
 
     const symmetricDifference = enumSet.symmetricDifference(setLike);
 
+    expect(symmetricDifference).toBeInstanceOf(Set);
     expect([...symmetricDifference]).toEqual([Directions.Left, 'someValue']);
   });
 });
