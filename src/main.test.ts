@@ -331,10 +331,13 @@ describe('isSubsetOf', () => {
 describe('isSupersetOf', () => {
   test('should be superset of subset EnumSet', () => {
     const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+    const other = new EnumSet([Directions.Left]);
+    const otherKeys = vi.spyOn(other, 'keys');
 
-    const isSuperset = enumSet.isSupersetOf(new EnumSet([Directions.Left]));
+    const isSuperset = enumSet.isSupersetOf(other);
 
     expect(isSuperset).toBe(true);
+    expect(otherKeys).not.toHaveBeenCalled();
   });
 
   test('should be superset of subset set-like', () => {
