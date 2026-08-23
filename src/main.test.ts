@@ -340,12 +340,22 @@ describe('isSupersetOf', () => {
     expect(otherKeys).not.toHaveBeenCalled();
   });
 
-  test('should be superset of subset set-like', () => {
-    const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+  describe('Set-like', () => {
+    test('should be superset of subset', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
 
-    const isSuperset = enumSet.isSupersetOf(new SetLikeStub([Directions.Left]));
+      const isSuperset = enumSet.isSupersetOf(new SetLikeStub([Directions.Left]));
 
-    expect(isSuperset).toBe(true);
+      expect(isSuperset).toBe(true);
+    });
+
+    test('should not be superset of non-subset', () => {
+      const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+
+      const isSuperset = enumSet.isSupersetOf(new SetLikeStub([Directions.Left, Directions.Down]));
+
+      expect(isSuperset).toBe(false);
+    });
   });
 });
 
