@@ -27,7 +27,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false # never use caching in release builds
       - run: npm ci
-      - uses: changesets/action@v1
+      - uses: changesets/action@v2
         with:
-          publish: npm run release
-          commit: "chore: version packages"
+          publish-script: npm run release
+          commit-message: "chore: version packages"
