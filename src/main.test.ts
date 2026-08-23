@@ -353,18 +353,24 @@ describe('isDisjointFrom', () => {
   describe('EnumSet', () => {
     test('should be disjoint', () => {
       const enumSet = new EnumSet<Direction>([Directions.Left]);
+      const other = new EnumSet([Directions.Right]);
+      const otherHas = vi.spyOn(other, 'has');
 
-      const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Right]));
+      const isDisjoint = enumSet.isDisjointFrom(other);
 
       expect(isDisjoint).toBe(true);
+      expect(otherHas).not.toHaveBeenCalled();
     });
 
     test('should not be disjoint from set with shared element', () => {
       const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+      const other = new EnumSet([Directions.Up, Directions.Right]);
+      const otherHas = vi.spyOn(other, 'has');
 
-      const isDisjoint = enumSet.isDisjointFrom(new EnumSet([Directions.Up, Directions.Right]));
+      const isDisjoint = enumSet.isDisjointFrom(other);
 
       expect(isDisjoint).toBe(false);
+      expect(otherHas).not.toHaveBeenCalled();
     });
   });
 
