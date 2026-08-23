@@ -288,18 +288,24 @@ describe('isSubsetOf', () => {
   describe('EnumSet', () => {
     test('should be subset of superset', () => {
       const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+      const other = new EnumSet<Direction>([Directions.Left, Directions.Up, Directions.Right]);
+      const otherHas = vi.spyOn(other, 'has');
 
-      const isSubset = enumSet.isSubsetOf(new EnumSet<Direction>([Directions.Left, Directions.Up, Directions.Right]));
+      const isSubset = enumSet.isSubsetOf(other);
 
       expect(isSubset).toBe(true);
+      expect(otherHas).not.toHaveBeenCalled();
     });
 
     test('should not be subset of non-superset', () => {
       const enumSet = new EnumSet<Direction>([Directions.Left, Directions.Up]);
+      const other = new EnumSet([Directions.Left]);
+      const otherHas = vi.spyOn(other, 'has');
 
-      const isSubset = enumSet.isSubsetOf(new EnumSet([Directions.Left]));
+      const isSubset = enumSet.isSubsetOf(other);
 
       expect(isSubset).toBe(false);
+      expect(otherHas).not.toHaveBeenCalled();
     });
   });
 
