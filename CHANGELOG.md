@@ -1,5 +1,11 @@
 # @marco.spiess/enumset
 
+## 0.0.5
+
+### Patch Changes
+
+- 1ab9074: Add mutation testing
+
 ## 0.0.4
 
 ### Patch Changes
