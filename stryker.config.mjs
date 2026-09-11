@@ -9,7 +9,7 @@ const config = {
   testRunner_comment:
     'Take a look at https://stryker-mutator.io/docs/stryker-js/vitest-runner for information about the vitest plugin.',
   coverageAnalysis: 'perTest',
-  ignorePatterns: ['**/*.md', '**/*.test-d.ts'],
+  ignorePatterns: ['**/*.md', '**/*.test-d.ts', '**/*.benchmark.ts'],
   mutate: ['src/**/*.ts', '!src/**/*.test.ts', '!src/SetLikeStub.ts', '!src/IntegerLessThan32.ts'],
 };
 export default config;
