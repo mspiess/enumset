@@ -28,6 +28,7 @@
     "lint": "eslint src/",
     "test": "vitest --typecheck --run",
     "test:mutation": "stryker run",
+    "benchmark": "vitest bench",
     "changeset": "changeset",
     "release": "npm run build && changeset tag && npm publish --provenance --access public"
   },
