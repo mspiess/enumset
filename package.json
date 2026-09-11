@@ -43,7 +43,7 @@
   "homepage": "https://github.com/mspiess/enumset#readme",
   "devDependencies": {
     "@changesets/changelog-github": "1.0.0",
-    "@changesets/cli": "3.0.1",
+    "@changesets/cli": "3.0.2",
     "@eslint/js": "10.0.1",
     "@eslint/markdown": "8.0.3",
     "@microsoft/api-extractor": "7.59.0",
