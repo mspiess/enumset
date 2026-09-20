@@ -10,18 +10,25 @@ describe('has', () => {
   test('empty set', async ({ bench }) => {
     const nativeSet = new Set();
     const enumSet = new EnumSet();
+    let result: boolean[] | null = null;
 
-    await bench.compare(
+    const benchStorage = await bench.compare(
       bench('native set', () => {
-        allValues.forEach((value) => {
-          nativeSet.has(value);
-        });
+        result = allValues.map(value => nativeSet.has(value));
       }), bench('enum set', () => {
-        allValues.forEach((value) => {
-          enumSet.has(value);
-        });
-      }),
+        result = allValues.map(value => enumSet.has(value));
+      }), {
+        setup() {
+          result = null;
+        },
+        teardown() {
+          expect(result!.length).toEqual(allValues.length);
+          expect(result!.every(value => value === false)).toBeTruthy();
+        },
+      },
     );
+
+    expect(benchStorage.get('enum set')).toBeFasterThan(benchStorage.get('native set'));
   });
 
   test('full set', async ({ bench }) => {
