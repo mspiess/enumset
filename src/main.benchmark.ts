@@ -2,9 +2,9 @@ import { describe, expect, test } from 'vitest';
 import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
 import { EnumSet } from './main.ts';
 
-const allValues = [...Array(32).keys()] as IntegerLessThan32[];
-const lowerHalfValues = [...Array(16).keys()] as IntegerLessThan32[];
-const upperHalfValues = [...Array(16).keys()].map(value => value + 16) as IntegerLessThan32[];
+const allValues = Object.freeze([...Array(32).keys()] as IntegerLessThan32[]);
+const lowerHalfValues = Object.freeze([...Array(16).keys()] as IntegerLessThan32[]);
+const upperHalfValues = Object.freeze([...Array(16).keys()].map(value => value + 16) as IntegerLessThan32[]);
 
 describe('has', () => {
   test('empty set', async ({ bench }) => {
@@ -112,9 +112,9 @@ test.for([
 
 test.for<{
   operation: 'union' | 'intersection' | 'difference' | 'symmetricDifference';
-  leftValues: IntegerLessThan32[];
-  rightValues: IntegerLessThan32[];
-  expectedValues: IntegerLessThan32[];
+  leftValues: Readonly<IntegerLessThan32[]>;
+  rightValues: Readonly<IntegerLessThan32[]>;
+  expectedValues: Readonly<IntegerLessThan32[]>;
 }>([
   {
     operation: 'union',
@@ -168,8 +168,8 @@ test.for<{
 
 test.for<{
   operation: 'isDisjointFrom' | 'isSubsetOf' | 'isSupersetOf';
-  leftValues: IntegerLessThan32[];
-  rightValues: IntegerLessThan32[];
+  leftValues: Readonly<IntegerLessThan32[]>;
+  rightValues: Readonly<IntegerLessThan32[]>;
 }>([
   {
     operation: 'isSubsetOf',
