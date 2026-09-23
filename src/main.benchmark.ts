@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { type BenchFnOptions, describe, expect, test } from 'vitest';
 import type { IntegerLessThan32 } from './IntegerLessThan32.ts';
 import { EnumSet } from './main.ts';
 
@@ -12,19 +12,23 @@ describe('has', () => {
     const enumSet = new EnumSet();
     let result: boolean[] | null = null;
 
+    const benchFnOptions: BenchFnOptions = {
+      beforeEach() {
+        result = null;
+      },
+      afterEach() {
+        expect(result!.length).toEqual(allValues.length);
+        expect(result!.every(value => value === false)).toBeTruthy();
+      },
+    };
     const benchStorage = await bench.compare(
-      bench('native set', () => {
+      bench('native set', benchFnOptions, () => {
         result = allValues.map(value => nativeSet.has(value));
-      }), bench('enum set', () => {
+      }), bench('enum set', benchFnOptions, () => {
         result = allValues.map(value => enumSet.has(value));
-      }), {
-        setup() {
-          result = null;
-        },
-        teardown() {
-          expect(result!.length).toEqual(allValues.length);
-          expect(result!.every(value => value === false)).toBeTruthy();
-        },
+      }),
+      {
+        time: 20,
       },
     );
 
@@ -35,21 +39,24 @@ describe('has', () => {
     const nativeSet = new Set(allValues);
     const enumSet = new EnumSet(allValues);
     let result: boolean[] | null = null;
+    const benchFnOptions: BenchFnOptions = {
+      beforeEach() {
+        result = null;
+      },
+      afterEach() {
+        expect(result!.length).toEqual(allValues.length);
+        expect(result!.every(value => value === true)).toBeTruthy();
+      },
+    };
 
     await bench.compare(
-      bench('native set', () => {
+      bench('native set', benchFnOptions, () => {
         result = allValues.map(value => nativeSet.has(value));
-      }), bench('enum set', () => {
+      }), bench('enum set', benchFnOptions, () => {
         result = allValues.map(value => enumSet.has(value));
       }),
       {
-        setup() {
-          result = null;
-        },
-        teardown() {
-          expect(result!.length).toEqual(allValues.length);
-          expect(result!.every(value => value === true)).toBeTruthy();
-        },
+        time: 20,
       },
     );
   });
