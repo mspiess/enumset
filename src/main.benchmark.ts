@@ -77,23 +77,35 @@ test('add', async ({ bench }) => {
 });
 
 test('delete', async ({ bench }) => {
-  const nativeSet = new Set(allValues);
-  const enumSet = new EnumSet(allValues);
+  let nativeSet = new Set(allValues);
+  let enumSet = new EnumSet(allValues);
 
   const result = await bench.compare(
-    bench('native set', () => {
+    bench('native set', {
+      beforeEach() {
+        nativeSet = new Set(allValues);
+      },
+      afterEach() {
+        expect(nativeSet.size).toBe(0);
+      },
+    }, () => {
       allValues.forEach((value) => {
         nativeSet.delete(value);
       });
-    }), bench('enum set', () => {
+    }), bench('enum set', {
+      beforeEach() {
+        enumSet = new EnumSet(allValues);
+      },
+      afterEach() {
+        expect(enumSet.size).toBe(0);
+      },
+    }, () => {
       allValues.forEach((value) => {
         enumSet.delete(value);
       });
     }),
   );
 
-  expect(nativeSet.size).toBe(0);
-  expect(enumSet.size).toBe(0);
   expect(result.get('enum set')).toBeFasterThan(result.get('native set'));
 });
 
@@ -106,13 +118,22 @@ test.for([
 ])('$method', async ({ method }, { bench }) => {
   const nativeSet = new Set(allValues);
   const enumSet = new EnumSet(allValues);
+  let result: SetIterator<IntegerLessThan32> | null = null;
 
   await bench.compare(
     bench('native set', () => {
-      nativeSet[method]();
+      result = nativeSet[method]();
     }), bench('enum set', () => {
-      enumSet[method]();
+      result = enumSet[method]();
     }),
+    {
+      setup() {
+        result = null;
+      },
+      teardown() {
+        expect(result?.toArray()).toEqual(allValues);
+      },
+    },
   );
 });
 
