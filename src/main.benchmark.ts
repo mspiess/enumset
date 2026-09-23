@@ -34,17 +34,23 @@ describe('has', () => {
   test('full set', async ({ bench }) => {
     const nativeSet = new Set(allValues);
     const enumSet = new EnumSet(allValues);
+    let result: boolean[] | null = null;
 
     await bench.compare(
       bench('native set', () => {
-        allValues.forEach((value) => {
-          nativeSet.has(value);
-        });
+        result = allValues.map(value => nativeSet.has(value));
       }), bench('enum set', () => {
-        allValues.forEach((value) => {
-          enumSet.has(value);
-        });
+        result = allValues.map(value => enumSet.has(value));
       }),
+      {
+        setup() {
+          result = null;
+        },
+        teardown() {
+          expect(result!.length).toEqual(allValues.length);
+          expect(result!.every(value => value === true)).toBeTruthy();
+        },
+      },
     );
   });
 });
