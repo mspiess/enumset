@@ -1,5 +1,12 @@
 # @marco.spiess/enumset
 
+## 0.0.5
+
+### Patch Changes
+
+- 9b109dc: Add benchmark
+- 1ab9074: Add mutation testing
+
 ## 0.0.4
 
 ### Patch Changes
