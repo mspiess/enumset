@@ -59,7 +59,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.73.0",
     "unplugin-dts": "1.1.2",
-    "vite": "8.3.5",
+    "vite": "8.3.8",
     "vite-plugin-doctest": "3.0.0",
     "vitest": "5.1.0"
   }
